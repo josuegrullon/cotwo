@@ -54,7 +54,7 @@ function initialize() {
         url: 'http://cotwo-api.com/v1/regions',
         method: 'GET',
         dataType: 'json',
-        async: false,
+        async: true,
         success: function (data) {      
             // Region
             var regionF = data.region;
@@ -121,7 +121,7 @@ function initialize() {
     //     url: 'http://cotwo-api.com/v1/sensors',
     //     method: 'GET',
     //     dataType: 'json',
-    //     async: false,
+    //     async: true,
     //     success: function (data) {      
     //     // Sensors
     //         $.each(data, function (index, value) {
@@ -134,9 +134,7 @@ function initialize() {
     //         });
     //     }
     // });
-setInterval(function(){
-       // polyActiveSensor.setMap(null); 
-    markers = [];
+       markers = [];
     $.ajax({
         url: 'http://cotwo-api.com/v1/sensors',
         method: 'GET',
@@ -148,8 +146,7 @@ setInterval(function(){
                 markers.push([index, value.lat,value.long]);
                 infoWindowContent.push([
                     '<div class="info_content">' +
-                    '<h3>'+index + Math.random()+'</h3>' +
-                    '<p>Valor promedio: '+index+ + Math.random() +' ppmd</p>' +        '</div>'
+                    '<h3>'+index+'</h3></div>'
                 ]);
             });
         }
@@ -177,6 +174,9 @@ setInterval(function(){
         // Automatically center the map fitting all markers on the screen
         // map.fitBounds(bounds);
     }
+setInterval(function(){
+       // polyActiveSensor.setMap(null); 
+ 
 
 
 
@@ -186,7 +186,7 @@ setInterval(function(){
             url: 'http://cotwo-api.com/v1/movements',
             method: 'GET',
             dataType: 'json',
-            async: false,
+            async: true,
             success: function (data) {
 
                 // var activeSensors = data.active_sensors['0001'].quadrants.sub_quads[0].sub_quad;
