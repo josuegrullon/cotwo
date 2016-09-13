@@ -135,6 +135,8 @@ function initialize() {
     //     }
     // });
        markers = [];
+       markerssource = [];
+       markerssource2 = [];
     $.ajax({
         url: 'http://cotwo-api.com/v1/sensors',
         method: 'GET',
@@ -176,10 +178,6 @@ function initialize() {
     }
 setInterval(function(){
        // polyActiveSensor.setMap(null); 
- 
-
-
-
 
         // Multiple Markers
         $.ajax({
@@ -216,46 +214,88 @@ setInterval(function(){
                 });
 
                 if (data.source_ubication.source_events.source_location != null) {
-                    var marker = new google.maps.Marker({
-                      position: { 
-                        'lat': data.source_ubication.source_events.source_location[0], 
-                        'lng':data.source_ubication.source_events.source_location[1]
-                        },
-                      map: map,
-                      icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-                      title: 'Hello World!'
-                    });
-               
-                    var infowindow = new google.maps.InfoWindow({
-                      content: 'Informacion'
+                    $.each(data.source_ubication.source_events.source_location, function (index, value) {
+                        markerssource.push([index, value[0],value[1]]);
+                        infoWindowContent.push([
+                            '<div class="info_content">' +
+                            '<h3>'+index+'</h3></div>'
+                        ]);
                     });
 
-                    marker.addListener('click', function() {
-                      infowindow.open(map, marker);
-                    });
+                    // var marker = new google.maps.Marker({
+                    //   position: { 
+                    //     'lat': data.source_ubication.source_events.source_location[0], 
+                    //     'lng':data.source_ubication.source_events.source_location[1]
+                    //     },
+                    //   map: map,
+                    //   icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+                    //   title: 'Hello World!'
+                    // });
+               
+                    // var infowindow = new google.maps.InfoWindow({
+                    //   content: 'Informacion'
+                    // });
+
+                    // marker.addListener('click', function() {
+                    //   infowindow.open(map, marker);
+                    // });
                   
-                    setTimeout(function(){   marker.setMap(null); }, 3000);
+                    // setTimeout(function(){   markers.setMap(null); }, 3000);
                 }
 
                  polyActiveSensor = null;
                     data = null;
             }
         });
+
+
+
+    var infoWindowSource = new google.maps.InfoWindow(), marker, i;
+    // Loop through our array of markers & place each one on the map  
+    for( i = 0; i < markerssource.length; i++ ) {
+        var position = new google.maps.LatLng(markerssource[i][1], markerssource[i][2]);
+        bounds.extend(position);
+        marker = new google.maps.Marker({
+            position: position,
+            map: map,
+            icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+            // title: markerssource[i][0]
+        });
+    setTimeout(function(){  marker.setMap(null); }, 100);
+      
+        // Allow each marker to have an info window    
+        // google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        //     return function() {
+        //         infoWindowSource.setContent(infoWindowContent[i][0]);
+        //         infoWindowSource.open(map, marker);
+        //     }
+        // })(marker, i));
+
+        // Automatically center the map fitting all markers on the screen
+        // map.fitBounds(bounds);
+    }   
+
+
+    //  for( i = 0; i < markerssource.length; i++ ) {
+    //     map.removeOverlay(markerssource[i]);
+       
+    //     // Allow each marker to have an info window    
+    //     // google.maps.event.addListener(marker, 'click', (function(marker, i) {
+    //     //     return function() {
+    //     //         infoWindowSource.setContent(infoWindowContent[i][0]);
+    //     //         infoWindowSource.open(map, marker);
+    //     //     }
+    //     // })(marker, i));
+
+    //     // Automatically center the map fitting all markers on the screen
+    //     map.fitBounds(bounds);
+    // }   
+
+    //  setTimeout(function(){ 
+    //   markerssource = [];
+    // }, 3000);
  
 }, 3000);
-
-//     markers.push(['b',40.657037101162,
-// -4.704770288907]);
-//      infoWindowContent.push([
-//         '<div class="info_content">' +
-//         '<h3>Sensor D -90</h3>'
-//     ]);
-    // markers.push(['b',40.657306897766, -4.7054697132265]);
-    //  infoWindowContent.push([
-    //     '<div class="info_content">' +
-    //     '<h3>Sensor D -90</h3>'
-    // ]);
-
      
     // Display multiple markers on a map
     var infoWindow = new google.maps.InfoWindow(), marker, i;
