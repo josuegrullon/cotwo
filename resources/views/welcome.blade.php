@@ -12,14 +12,31 @@
 
 <script>
 
-    $(function() {
-
-       
+$(function() {
     // Asynchronously Load the map API 
     var script = document.createElement('script');
     script.src = "//maps.googleapis.com/maps/api/js?callback=initialize";
     document.body.appendChild(script);
 });
+
+function getColor(value) {
+    // #337ab7 //notice
+    // #5cb85c //success
+    // #5bc0de //info
+    // #f0ad4e //warn
+    // #d9534f //dang 
+    if(0 < value && 25 >= value) {
+        return '#5cb85c'; //
+    } else if(25 < value && 50 >= value) {
+        return '#5bc0de';
+    } else if(50 < value && 75 >= value) {
+        return '#f0ad4e';
+    } else if(75 < value ) {
+        return '#d9534f';
+    } else {
+        return '#337ab7'
+    }
+}
 
 function initialize() {
     var map;
@@ -67,10 +84,10 @@ function initialize() {
 
             var polyRegion = new google.maps.Polygon({
               paths: region,
-              strokeColor: '#039be5',
+              strokeColor: '#ababab',
               strokeOpacity: 0.8,
               strokeWeight: 3,
-              fillColor: '#039be5',
+              fillColor: '#ababab',
               fillOpacity: 0.35
             });
             polyRegion.setMap(map);
@@ -190,7 +207,8 @@ setInterval(function(){
                 // var activeSensors = data.active_sensors['0001'].quadrants.sub_quads[0].sub_quad;
                 $.each(data.active_sensors, function (index, value) {
                     if ('quadrants' in value) {
-                    var activeSensors = value.quadrants.sub_quads
+                        // console.log(value)
+                        var activeSensors = value.quadrants.sub_quads
                         $.each(activeSensors, function (index2, active) {
                              activeSensorsArea = [
                                 {lat: active.sub_quad[0][0], lng: active.sub_quad[0][1]},
@@ -198,13 +216,13 @@ setInterval(function(){
                                 {lat: active.sub_quad[2][0], lng: active.sub_quad[2][1]},
                                 {lat: active.sub_quad[3][0], lng: active.sub_quad[3][1]}
                             ];
-                            
+                            var stroke = getColor(value.group.avg);
                              var polyActiveSensor = new google.maps.Polygon({
                               paths: activeSensorsArea,
-                              strokeColor: '#F00',
+                              strokeColor: stroke,
                               strokeOpacity: 0.8,
                               strokeWeight: 3,
-                              fillColor: '#F00',        
+                              fillColor: stroke,        
                               fillOpacity: 0.35
                             });
                             polyActiveSensor.setMap(map);
