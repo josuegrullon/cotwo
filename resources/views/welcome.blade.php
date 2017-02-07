@@ -25,6 +25,8 @@ function getColor(value) {
     // #5bc0de //info
     // #f0ad4e //warn
     // #d9534f //dang 
+
+    value = (parseInt(value) / 10000) * 100;
     if(0 < value && 25 >= value) {
         return '#5cb85c'; //
     } else if(25 < value && 50 >= value) {
