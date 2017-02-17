@@ -15,7 +15,7 @@
 $(function() {
     // Asynchronously Load the map API 
     var script = document.createElement('script');
-    script.src = "//maps.googleapis.com/maps/api/js?callback=initialize";
+    script.src = "//maps.googleapis.com/maps/api/js?key=AIzaSyD8TA0fcoHjlWRME4Z5IZAz5nrQz3kLhzA&callback=initialize";
     document.body.appendChild(script);
 });
 
@@ -68,7 +68,7 @@ function initialize() {
     var markers = [];
     var infoWindowContent = [];
     $.ajax({
-        url: 'http://cotwo-api.com/v1/regions',
+        url: 'http://138.197.7.114:81/v1/regions',
         method: 'GET',
         dataType: 'json',
         async: true,
@@ -155,7 +155,7 @@ function initialize() {
        markerssource = [];
        markerssource2 = [];
     $.ajax({
-        url: 'http://cotwo-api.com/v1/sensors',
+        url: 'http://138.197.7.114:81/v1/sensors',
         method: 'GET',
         dataType: 'json',
         async: false,
@@ -198,7 +198,7 @@ setInterval(function(){
 
         // Multiple Markers
         $.ajax({
-            url: 'http://cotwo-api.com/v1/movements',
+            url: 'http://138.197.7.114:81/v1/movements',
             method: 'GET',
             dataType: 'json',
             async: true,

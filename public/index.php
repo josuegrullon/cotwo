@@ -32,7 +32,9 @@ require __DIR__.'/../bootstrap/autoload.php';
 | the responses back to the browser and delight our users.
 |
 */
-
+//ini_set('display_errors', 1);
+//ini_set('display_startup_errors', 1);
+//error_reporting(E_ALL);
 $app = require_once __DIR__.'/../bootstrap/app.php';
 
 /*
@@ -46,7 +48,7 @@ $app = require_once __DIR__.'/../bootstrap/app.php';
 | and wonderful application we have prepared for them.
 |
 */
-
+//die('csd');
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
 $response = $kernel->handle(
