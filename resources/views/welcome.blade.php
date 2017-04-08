@@ -12,6 +12,11 @@
 
 <script>
 
+// var API_URI = API_URL + '';
+// var API_URL = 'http://localhost/v1/';
+var API_URL = '{{getenv("API_URL")}}';
+
+
 $(function() {
     // Asynchronously Load the map API 
     var script = document.createElement('script');
@@ -70,7 +75,7 @@ function initialize() {
     var markers = [];
     var infoWindowContent = [];
     $.ajax({
-        url: 'http://138.197.7.114:81/v1/regions',
+        url: API_URL + 'regions',
         method: 'GET',
         dataType: 'json',
         async: true,
@@ -157,7 +162,7 @@ function initialize() {
        markerssource = [];
        markerssource2 = [];
     $.ajax({
-        url: 'http://138.197.7.114:81/v1/sensors',
+        url: API_URL + 'sensors',
         method: 'GET',
         dataType: 'json',
         async: false,
@@ -200,7 +205,7 @@ setInterval(function(){
 
         // Multiple Markers
         $.ajax({
-            url: 'http://138.197.7.114:81/v1/movements',
+            url: API_URL + 'movements',
             method: 'GET',
             dataType: 'json',
             async: true,
