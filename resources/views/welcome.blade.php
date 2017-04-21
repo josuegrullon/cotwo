@@ -168,12 +168,14 @@ function initialize() {
         async: false,
         success: function (data) {      
         // Sensors
+            var idx = 1;
             $.each(data, function (index, value) {
                 markers.push([index, value.lat,value.long]);
                 infoWindowContent.push([
                     '<div class="info_content">' +
-                    '<h3>'+index+'</h3></div>'
+                    '<h3>'+idx+'</h3></div>'
                 ]);
+                idx++;
             });
         }
     });
